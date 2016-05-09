@@ -9,6 +9,7 @@
  *	License:		GPLv2+
  *	Domain Path:	/languages
  *	Text Domain:	birderpics-photo-contest
+ *	GitHub Plugin URI: https://github.com/jiteshp/birderpics-photo-contest
  */
  
 /**
