@@ -118,7 +118,7 @@ function bppc_settings_page() {
 					</th>
 					
 					<td>
-						<input type="number" name="bppc_photos_per_page" id="bppc_photos_per_page" min="9" step="3" value="<?php echo get_option( 'bppc_photos_per_page', 24 ); ?>">
+						<input type="number" name="bppc_photos_per_page" id="bppc_photos_per_page" min="3" step="3" value="<?php echo get_option( 'bppc_photos_per_page', 24 ); ?>">
 					</td>
 				</tr>
 				
@@ -186,7 +186,7 @@ function bppc_settings_page() {
 												
 				<tr>
 					<th scope="row">
-						<label for="bppc_payu_merchant_key"><?php _e( 'PayUMoney Merchant Key' ); ?></label>
+						<label for="bppc_payu_merchant_key"><?php _e( 'PayU Merchant Key' ); ?></label>
 					</th>
 					
 					<td>
@@ -196,11 +196,21 @@ function bppc_settings_page() {
 				
 				<tr>
 					<th scope="row">
-						<label for="bppc_payu_salt"><?php _e( 'PayUMoney Salt' ); ?></label>
+						<label for="bppc_payu_salt"><?php _e( 'PayU Merchant Salt' ); ?></label>
 					</th>
 					
 					<td>
 						<input type="text" name="bppc_payu_salt" id="bppc_payu_salt"value="<?php echo get_option( 'bppc_payu_salt', '' ); ?>">
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label for="bppc_payu_mode"><?php _e( 'PayU Sandbox Mode' ); ?></label>
+					</th>
+					
+					<td>
+						<input type="checkbox" name="bppc_payu_mode" id="bppc_payu_mode" <?php checked( get_option( 'bppc_payu_mode', '' ), 'on' ); ?>>
 					</td>
 				</tr>
 			</table>
@@ -234,6 +244,8 @@ function bppc_register_settings() {
 	register_setting( 'bppc_options', 'bppc_payu_merchant_key' );
 	
 	register_setting( 'bppc_options', 'bppc_payu_salt' );
+	
+	register_setting( 'bppc_options', 'bppc_payu_mode' );
 }
 
 add_action( 'admin_init', 'bppc_register_settings' );

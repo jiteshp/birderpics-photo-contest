@@ -41,9 +41,7 @@ function bppc_voting_form_shortcode( $atts ) {
 			$voters = get_post_meta( $post->ID, 'bppc_voters' );
 			
 			if( $current_user_id && in_array( $current_user_id, $voters ) ) {
-				$output .= '<p class="highlight-block">' . 
-					__( 'You have already voted for this photo entry. Thank you.' ) . 
-				'</p>';
+				$output .= __( 'You have already voted for this photo entry. Thank you.' );
 			}
 			else {
 				$cmb = cmb2_get_metabox( 'bppc-voting-form', 'fake-object-id' );
@@ -62,9 +60,7 @@ function bppc_voting_form_shortcode( $atts ) {
 			}
 		}
 		else {
-			$output .= '<p class="highlight-block">' . 
-					__( 'Voting is closed for this photo entry.' ) . 
-				'</p>';
+			$output .= __( 'Voting is closed for this photo entry.' );
 		}
 	}
 	

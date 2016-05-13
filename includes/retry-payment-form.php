@@ -65,7 +65,7 @@ function bppc_handle_payment_failure( $content ) {
 		'save_button'		=> __( 'Re-try Payment' ),
 	) );
 	
-	return $content . $output;
+	return $content . '<div style="text-align: center; padding-bottom: 10em;">' . $output . '</div>';
 }
 
 add_filter( 'the_content', 'bppc_handle_payment_failure' );
@@ -103,7 +103,7 @@ function bppc_handle_retry_payment_form_submit() {
 		get_option( 'bppc_payu_salt' ),
 		get_permalink( get_option( 'bppc_payment_success_page' ) ),
 		get_permalink( get_option( 'bppc_payment_failure_page' ) ),
-		BPPC_PAYU_TEST_MODE
+		( 'on' == get_option( 'bppc_payu_mode' ) )
 	);
 	
 	$payment_gateway->request_payment( $_POST );

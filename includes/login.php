@@ -19,7 +19,7 @@ function bppc_login_page_content( $content ) {
 		), wp_login_url() );
 		
 		// Output the button.
-		$content .= '<p style="text-align:center;">' . '<a href="' . esc_url( $login_url ) . '" class="button-alt-big"><i class="fa fa-facebook-square"></i>&nbsp;&nbsp;Login With Facebook</a>' . '</p>';
+		$content .= '<p style="text-align:center; padding-bottom: 10em;">' . '<a href="' . esc_url( $login_url ) . '" class="button">Login With Facebook</a>' . '</p>';
 	}
 	
 	return $content;

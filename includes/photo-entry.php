@@ -43,6 +43,7 @@ function bppc_add_photo_entry_columns( $columns ) {
 			'bppc_payment_id' => __( 'Payment ID' ),
 			'bppc_payment_date' => __( 'Payment Date' ),
 			'bppc_payment_amount' => __( 'Amount' ),
+			'bppc_votes' => __( 'Votes' ),
 		)
 	);
 }
@@ -85,6 +86,18 @@ function bppc_photo_entry_column_data( $column, $post_id ) {
 			
 			if( '' != $payment_amount ) {
 				echo $payment_amount;
+			}
+			else {
+				echo '&mdash;';
+			}
+			
+			break;
+					
+		case 'bppc_votes':
+			$votes = get_post_meta( $post_id , 'bppc_votes' , true );
+			
+			if( 0 < $votes ) {
+				echo $votes;
 			}
 			else {
 				echo '&mdash;';

@@ -42,7 +42,13 @@ function bppc_register_photo_submission_form() {
 	) );
 	
 	$cmb->add_field( array(
-		'description'	=> __( 'I agree to the terms &amp; conditions of the content.' ),
+		'name'			=> __( 'Your phone number (required)' ),
+		'id'			=> 'submitted_phone_number',
+		'type'			=> 'text',
+	) );
+	
+	$cmb->add_field( array(
+		'description'	=> __( 'I agree to the <a target="_blank" href="http://birderpics.com/photo-contest-rules">terms &amp; conditions</a>.' ),
 		'id'			=> 'submitted_agreement',
 		'type'			=> 'checkbox',
 	) );
@@ -101,7 +107,7 @@ function bppc_photo_submission_page_content( $content ) {
 		'save_button'	=> $save_button_text,
 	) );
 	
-	return $content . '<div class="highlight-block">' . $output . '</div>';
+	return $content . '<div class="bppc-form">' . $output . '</div>';
 }
 
 add_filter( 'the_content', 'bppc_photo_submission_page_content' );
@@ -184,6 +190,14 @@ function bppc_photo_submission_form_submit() {
 		);	
 	}
 	
+	// Validate the submitted phone number.
+	if( empty( $_POST['submitted_phone_number'] ) ||
+		'' == trim( $_POST['submitted_phone_number'] ) ) {
+		return $cmb->prop( 'submission_error', 
+			new WP_Error( 'post_data_missing', __( 'Phone number is required.' ) )
+		);	
+	}
+	
 	// Validate the agreement to terms & conditions.
 	if( empty( $_POST['submitted_agreement'] ) ||
 		'on' != $_POST['submitted_agreement'] ) {
@@ -233,6 +247,9 @@ function bppc_photo_submission_form_submit() {
 	// Set the photo entry's post thumbnail.
 	set_post_thumbnail( $new_post_id, $img_id );
 	
+	// Set the photo's votes to zero.
+	update_post_meta( $new_post_id, 'bppc_votes', 0 );
+	
 	// Redirect to the thank you page/payment page depending on the entry fee.
 	if( 0 < $entry_fee ) {
 		$payment_gateway = new PayUMoney_Payment_Gateway( 
@@ -240,7 +257,7 @@ function bppc_photo_submission_form_submit() {
 			get_option( 'bppc_payu_salt' ),
 			get_permalink( get_option( 'bppc_payment_success_page' ) ),
 			get_permalink( get_option( 'bppc_payment_failure_page' ) ),
-			BPPC_PAYU_TEST_MODE
+			( 'on' == get_option( 'bppc_payu_mode' ) )
 		);
 		
 		$user_firstname = get_the_author_meta( 'display_name', get_current_user_id() );
@@ -251,7 +268,7 @@ function bppc_photo_submission_form_submit() {
 			'amount'	  => $entry_fee,
 			'firstname'	  => $user_firstname,
 			'email'		  => $user_email,
-			'phone'		  => '9011223225',
+			'phone'		  => $sanitized_values['submitted_phone_number'],
 			'productinfo' => 'Photo Entry ' . $new_post_id,
 			'enforce_paymethod' => 'creditcard|debitcard|netbanking',
 		) );

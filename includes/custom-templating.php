@@ -36,6 +36,7 @@ function bppc_archive_template_query( $query ) {
 		$query->set( 'monthnum', date( 'm' ) );
 		
 		// Order photo entries by vote count.
+		$query->set( 'order', 'DESC' );
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'meta_query', array(
 			'relation'	=> 'OR',
