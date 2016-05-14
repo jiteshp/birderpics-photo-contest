@@ -281,6 +281,8 @@ function bppc_photo_submission_form_submit() {
 			get_option( 'bppc_photo_submission_thankyou_page' ) );
 	}
 	
+	bppc_log( "Redirecting to: " . $next_page );
+	
 	wp_redirect( esc_url_raw( $next_page ) );
 	
 	exit;
@@ -327,8 +329,8 @@ function bppc_payment_successful_page_content( $content ) {
 	global $post;
 	$payment_success_page = get_option( 'bppc_payment_success_page', 0 );
 	
-	bppc_log( 'Current page: ' . $post->ID );
-	bppc_log( 'Success page: ' . $payment_success_page );
+	bppc_log( 'Current page: ' . $post->ID . ' ' . get_the_title( $post->ID ) );
+	bppc_log( 'Success page: ' . $payment_success_page . ' ' . get_the_title( $payment_success_page ) );
 	
 	// Check if this page is the payment success page.
 	if( $post->ID == $payment_success_page ) {
@@ -355,29 +357,25 @@ function bppc_payment_successful_page_content( $content ) {
 				update_post_meta( $photo_entry->ID, 'bppc_payment_date', $_POST['addedon'] );
 				update_post_meta( $photo_entry->ID, 'bppc_payment_amount', $_POST['amount'] );
 				
-				bppc_log( get_post_meta( $photo_entry->ID ) );
-				
-				$content .=
-					'<table>' .
-						'<tr>' .
-							'<td>' . __( 'Transaction id: ', 'bppc' ) . '</td>' .
-							'<td>' . $_POST['mihpayid'] . '</td>' .
-						'</tr>' .
-						'<tr>' .
-							'<td>' . __( 'Transaction date: ', 'bppc' ) . '</td>' .
-							'<td>' . date( 'F j, Y h:i a', strtotime( $_POST['addedon'] ) ) . '</td>' .
-						'</tr>' .
-						'<tr>' .
-							'<td>' . __( 'Transaction amount: ', 'bppc' ) . '</td>' .
-							'<td>' . $_POST['amount'] . '</td>' .
-						'</tr>' .
-					'</table>';
-					
-				return $content;
 			}
-			
-			wp_redirect( home_url( '/' ) );
-			exit;
+
+			bppc_log( get_post_meta( $photo_entry->ID ) );
+				
+			$content .=
+				'<table>' .
+					'<tr>' .
+						'<td>' . __( 'Transaction id: ', 'bppc' ) . '</td>' .
+						'<td>' . get_post_meta( $photo_entry->ID, 'bppc_payment_id', true ) . '</td>' .
+					'</tr>' .
+					'<tr>' .
+						'<td>' . __( 'Transaction date: ', 'bppc' ) . '</td>' .
+						'<td>' . date( 'F j, Y h:i a', strtotime( get_post_meta( $photo_entry->ID, 'bppc_payment_date', true ) ) ) . '</td>' .
+					'</tr>' .
+					'<tr>' .
+						'<td>' . __( 'Transaction amount: ', 'bppc' ) . '</td>' .
+						'<td>' . get_post_meta( $photo_entry->ID, 'bppc_payment_amount', true ) . '</td>' .
+					'</tr>' .
+				'</table>';
 		}
 	}
 	
