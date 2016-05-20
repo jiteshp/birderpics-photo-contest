@@ -9,7 +9,7 @@
 		</header>
 
 		<p class="bppc-photo">
-			<?php the_post_thumbnail(); ?>
+			<?php the_post_thumbnail( 'full' ); ?>
 		</p>
 		
 		<div class="voting-form">

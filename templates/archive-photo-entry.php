@@ -9,6 +9,8 @@
 	
 	<div class="entry-content">
 		<?php if( have_posts() ): ?>
+			<p style="text-align: center;"><?php _e( 'Click on the photo below to see details & vote.' ); ?></p>
+		
 			<div class="bppc-grid"><!--
 				<?php while( have_posts() ): the_post(); ?>
 					--><div class="bppc-photo-entry">
