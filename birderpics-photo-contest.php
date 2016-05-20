@@ -3,7 +3,7 @@
  *	Plugin Name:	BirderPics Photo Contest
  *	Plugin URI:		http://birderpics.com/
  *	Description:	Runs monthly photo contest on the BirderPics.com website.
- *	Version:		1.0.1
+ *	Version:		1.0.2
  *	Author:			Jitesh Patil
  *	Author URI:		http://jiteshpatil.com/
  *	License:		GPLv2+
