@@ -41,11 +41,13 @@ function bppc_register_photo_submission_form() {
 		'type'			=> 'textarea',
 	) );
 	
+	/*
 	$cmb->add_field( array(
 		'name'			=> __( 'Your phone number (required)' ),
 		'id'			=> 'submitted_phone_number',
 		'type'			=> 'text',
 	) );
+	*/
 	
 	$cmb->add_field( array(
 		'description'	=> __( 'I agree to the <a target="_blank" href="http://birderpics.com/photo-contest-rules">terms &amp; conditions</a>.' ),
@@ -190,6 +192,7 @@ function bppc_photo_submission_form_submit() {
 		);	
 	}
 	
+	/*
 	// Validate the submitted phone number.
 	if( empty( $_POST['submitted_phone_number'] ) ||
 		'' == trim( $_POST['submitted_phone_number'] ) ) {
@@ -197,6 +200,7 @@ function bppc_photo_submission_form_submit() {
 			new WP_Error( 'post_data_missing', __( 'Phone number is required.' ) )
 		);	
 	}
+	*/
 	
 	// Validate the agreement to terms & conditions.
 	if( empty( $_POST['submitted_agreement'] ) ||
@@ -268,7 +272,7 @@ function bppc_photo_submission_form_submit() {
 			'amount'	  => $entry_fee,
 			'firstname'	  => $user_firstname,
 			'email'		  => $user_email,
-			'phone'		  => $sanitized_values['submitted_phone_number'],
+			'phone'		  => '9372707100', // $sanitized_values['submitted_phone_number'],
 			'productinfo' => 'Photo Entry ' . $new_post_id,
 			'enforce_paymethod' => 'creditcard|debitcard|netbanking',
 		) );
